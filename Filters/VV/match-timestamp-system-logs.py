@@ -25,12 +25,12 @@ def hasNumbers(inputString):
     return any(char.isdigit() for char in inputString)
 
 
-files=os.listdir("seperated_fetched_xml_VV/1-10")
+files=os.listdir("seperated_fetched_xml_VV/11-30")
 
 for file in files:
     g=open("time_stamp_removed//"+file,'w')
     added=[]
-    for line in open("seperated_fetched_xml_VV/1-10/"+file):
+    for line in open("seperated_fetched_xml_VV/11-30/"+file):
         flag=0
         line=line.lstrip('\t')
         line=line.lstrip('>')
@@ -67,10 +67,9 @@ for file in files:
 ##                    remainder.append(word)
             line=" ".join(remainder)
             if line not in added:
-                added.append(line)
-                line+="\n"
-                g.write(line)
+                if len(line.split())>2:
+                    added.append(line)
+                    line+="\n"
+                    g.write(line)
                 
-        
-
     g.close()
