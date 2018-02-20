@@ -9,6 +9,7 @@ pattern_5= re.compile("\\d{4}[-]\\d{1,2}[-]\\d{1,2} \\d{1,2}[:]?\\d{1,2}[:]?\\d{
 pattern_6= re.compile("\\d{6}[-]?\\d{1,2}[:]?\\d{1,2}[:]?\\d{1,2}[.]?\\d* \\d*")
 pattern_7= re.compile("\\d{4}[-]?\\d{1,2}[-]?\\d{1,2} \\d{1,2}[:]?\\d{1,2}[:]?\\d{1,2} \\w{3} ")
 pattern_8= re.compile("\\d{4}[-]?\\d{1,2}[-]?\\d{1,2} \\d{1,2}[:]?\\d{1,2}[:]?\\d{1,2}[.]?\\d* ")
+pattern_9= re.compile("\\d{4}[-]?\\d{1,2}[-]?\\d{1,2} \\d{1,2}[:]?\\d{1,2}[:]?\\d{1,2}[.]?\\d* \\w{3} ")
 
 line1="20171024-06:40:50 27091 | afterFail starting |"
 line2="171024-05:58:14.838 140040325277440 6,.srdata.usr.2,1,normal,1/0,24576,24576,V,0,---,N,Y"
@@ -18,6 +19,7 @@ line5="2014-07-30 12:00:47 PDT Error       Task exited with status 1"
 line6="171024-06:42:00.422 29158"
 line7="2016-04-24 10:20:23 PDT Created     task."
 line8="2010-08-30 15:24:12.02 new system log format"
+line9="2009-08-13 18:07:04.24 PDT {6729} {events:normal       }"
 
 # pattern_6 taken care by pattern_2
 
@@ -25,17 +27,20 @@ def hasNumbers(inputString):
     return any(char.isdigit() for char in inputString)
 
 
-files=os.listdir("seperated_fetched_xml_VV/11-30")
+files=os.listdir("seperated_fetched_xml_VV/31-50")
 
 for file in files:
-    g=open("time_stamp_removed//"+file,'w')
+    g=open("time_stamp_removed/31-50//"+file,'w')
     added=[]
-    for line in open("seperated_fetched_xml_VV/11-30/"+file):
+    for line in open("seperated_fetched_xml_VV/31-50/"+file):
         flag=0
         line=line.lstrip('\t')
         line=line.lstrip('>')
         line=line.lstrip('&gt;')
         line=line.lstrip()
+        if re.match(pattern_9,line): 
+            line=re.sub(pattern_9,'',line)
+            flag=1
         if re.match(pattern_1,line): 
             line=re.sub(pattern_1,'',line)
             flag=1
