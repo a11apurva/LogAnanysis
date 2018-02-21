@@ -2,11 +2,16 @@ import re
 import os
 
 
-files=os.listdir("seperated_fetched_xml_VV//1-10")
+files=os.listdir("seperated_fetched_xml_VV//31-50")
+
+pattern1='[+0x][a-zA-Z0-9]*$'
+pattern2='[+0x][a-zA-Z0-9/x]*$'
+pattern3='[0-9\[\]/x]*$'
+pattern4='\([A-Za-z0-9.\-&;]*\)*$'
 
 for file in files:
-    g=open("key_words//"+file,'w')
-    for line in open("seperated_fetched_xml_VV//1-10//"+file):
+    g=open("key_words/31-50//"+file,'w')
+    for line in open("seperated_fetched_xml_VV//31-50//"+file):
 
         if ("bug_id" in line) or ("short_desc" in line):
             continue
@@ -14,27 +19,35 @@ for file in files:
         line2=line.strip('\t')
         line2=line2.strip('>')
         line2=line2.strip()
-        line2=line2.strip('&gt;')
-        line2=line2.strip('&lt;')
-        line2=line2.strip('&quot;')
-        line2=line2.strip('&apos;')        
+        line2=line2.replace('&gt;','')
+        line2=line2.replace('&lt;','')
+        line2=line2.replace('&quot;','')
+        line2=line2.replace('&apos;','')        
         
         line2=line2.split()
 
         for a in line2:
+            b=a
             a=a.strip()
-            a=a.strip('&gt;')
-            a=a.strip('&quot;')
-            a=a.strip('&lt;')
-            a=a.strip('&apos;')
+            a=a.replace('&gt;','')
+            a=a.replace('&quot;','')
+            a=a.replace('&lt;','')
+            a=a.replace('&apos;','')
             a=a.replace('4&gt;','')
-            a=a.strip(')|(|[|]')
-            a=a.strip(':|,')
+            a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}')
+            if re.search(pattern2,a) :
+                a=re.sub(pattern2,'',a)
+            if re.search(pattern3,a) :
+                a=re.sub(pattern3,'',a)
+            if re.search(pattern4,a) :
+                a=re.sub(pattern4,'',a)
+            a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}')
             a=a.strip()
             if a.islower() and "_" in a:
-                print a
+                print b+"\t"+a
+                #print a
                 g.write(a+"\n")
-
+                
     g.close()
 
         
