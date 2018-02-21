@@ -4,10 +4,11 @@ import os
 
 files=os.listdir("seperated_fetched_xml_VV//31-50")
 
-pattern1='[+0x][a-zA-Z0-9]*$'
-pattern2='[+0x][a-zA-Z0-9/x]*$'
-pattern3='[0-9\[\]/x]*$'
-pattern4='\([A-Za-z0-9.\-&;]*\)*$'
+#pattern1='[+0x][a-zA-Z0-9]*$'  #'[+0x]+[a-zA-Z0-9/x]*$'
+pattern2='[+]{1}[0]{1}[x]{1}[a-zA-Z0-9/x]*$'     # remove : vb_clean_thread+0x0/0x56e
+pattern3='[\[]{1}[0-9\[\]/x]*$'                  # remove : lru_ws_dev_hdr[0][0]                #'[0-9\[\]/x]*$'
+pattern4='\(+[A-Za-z0-9.\-&;]*\)*$'              # remove : dev_hdr(r&;u_.w)
+pattern5='[=]{1}[a-zA-Z0-9\-]+$'                 # to-keep: status=-2
 
 for file in files:
     g=open("key_words/31-50//"+file,'w')
@@ -34,12 +35,12 @@ for file in files:
             a=a.replace('&lt;','')
             a=a.replace('&apos;','')
             a=a.replace('4&gt;','')
-            a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}')
+            a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}|;')
             if re.search(pattern2,a) :
                 a=re.sub(pattern2,'',a)
-            if re.search(pattern3,a) :
+            if re.search(pattern3,a) and re.search(pattern5,a) :
                 a=re.sub(pattern3,'',a)
-            if re.search(pattern4,a) :
+            if re.search(pattern4,a):
                 a=re.sub(pattern4,'',a)
             a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}')
             a=a.strip()
