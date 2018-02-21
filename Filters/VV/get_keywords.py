@@ -38,7 +38,7 @@ for file in files:
             a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}|;')
             if re.search(pattern2,a) :
                 a=re.sub(pattern2,'',a)
-            if re.search(pattern3,a) and re.search(pattern5,a) :
+            if re.search(pattern3,a):
                 a=re.sub(pattern3,'',a)
             if re.search(pattern4,a):
                 a=re.sub(pattern4,'',a)
