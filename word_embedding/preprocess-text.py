@@ -25,7 +25,7 @@ for line in open("time_stamp_removed.txt"):
         a=a.replace('&lt;','')
         a=a.replace('&apos;','')
         a=a.replace('4&gt;','')
-        a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}|;|-')
+        a=a.strip(')|(|[|]|.|*|_|:|,|/|\\|{|}|;|-') #added -
         a.strip()
         if a=="" or len(a)<=2:
             continue
