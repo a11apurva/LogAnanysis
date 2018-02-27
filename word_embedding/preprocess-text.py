@@ -18,6 +18,10 @@ for line in open("time_stamp_removed.txt"):
     line2=line2.split()
     sentence=[]
     for a in line2:
+        try:
+            a=a.encode('utf-8').strip()
+        except:
+            continue
         b=a
         a=a.strip()
         a=a.replace('&gt;','')
