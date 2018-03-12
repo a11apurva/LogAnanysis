@@ -8,7 +8,7 @@ for line in open("common_negative_words.txt","r"):
 
 
 file=[]
-for line in open("sysmgr-test-1.txt","r"):
+for line in open("sysmgr","r"):
     file.append(line)
 
 
@@ -19,10 +19,11 @@ pattern= re.compile("\\d{4}[-]?\\d{1,2}[-]?\\d{1,2} \\d{1,2}[:]?\\d{1,2}[:]?\\d{
 
 g=open("sysmgr-fetched.txt","w")
 
+seen=set()
+
 def go_up(index):
     for ind in range(index,-1,-1):
-        if re.match(pattern,file[ind]):
-            #print file[ind]   
+        if re.match(pattern,file[ind]):  
             return ind
 
 def go_down(index):
@@ -39,18 +40,22 @@ def print_lines(ind1,ind2):
         #print file[ind1]
         g.write(file[ind1])
 
+
+
 for line in file:
     ind1=0
     ind2=0
     for word in line.lower().split():
         if word in neg:
             ind1=go_up(file.index(line))
-            print line
-            print word
+            #print line
+            #print word
             ind2=go_down(file.index(line))
             #print ind1,ind2
             #print file.index(line)
-            print_lines(ind1,ind2)
+            if ind1 not in seen:
+                print_lines(ind1,ind2)
+                seen.add(ind1)
             break
         
 g.close()
