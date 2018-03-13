@@ -20,14 +20,21 @@ line6="171024-06:42:00.422 29158"
 line7="2016-04-24 10:20:23 PDT Created     task."
 line8="2010-08-30 15:24:12.02 new system log format"
 line9="2009-08-13 18:07:04.24 PDT {6729} {events:normal       }"
-
 # pattern_6 taken care by pattern_2
 
-files=os.listdir("seperated_fetched_xml")
+files=os.listdir("filtered_bugzilla")
+
+count=0
 
 for file in files:
-    g=open("timestamp//"+file,'w')
-    for line in open("seperated_fetched_xml/"+file):
+    
+    count+=1
+    if count%100 == 0 :
+        print "100 files processed..."
+        count=0
+        
+    g=open("system_logs//"+file,'w')
+    for line in open("filtered_bugzilla/"+file):
         line=line.lstrip('\t')
         line=line.lstrip('>')
         line=line.lstrip('&gt;')
@@ -50,5 +57,4 @@ for file in files:
         elif re.match(pattern_8,line) :
             g.write(re.sub(pattern_8,'',line))
         
-
     g.close()
