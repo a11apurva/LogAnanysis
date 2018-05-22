@@ -1,0 +1,20 @@
+##windows:
+
+set https_proxy=https://uname:pass@web-proxy.com:8088
+
+set http_proxy=http://uname:pass@web-proxy.com:8088
+
+##linux:
+
+export http_proxy="http://web-proxy.in:8080"
+export https_proxy="https://web-proxy.in:8080"
+
+
+##python:
+
+proxy = 'http://uname:pass@web-proxy.com:8088'
+
+os.environ['http_proxy'] = proxy 
+os.environ['HTTP_PROXY'] = proxy
+os.environ['https_proxy'] = proxy
+os.environ['HTTPS_PROXY'] = proxy
