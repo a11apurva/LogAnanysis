@@ -1,6 +1,6 @@
 %{
 #include <stdio.h>
-#include "ytab.h"
+#include "y.tab.h"
 %}
 
 %%
@@ -10,6 +10,8 @@ from          return FROM;
 [*]           return STAR;
 \n            /* ignore end of line */;
 [ \t]+        /* ignore whitespace */;
-[a-zA-Z0-9]+  yylval=strdup(yytext); return TOK;
+[a-zA-Z0-9]+  yylval.string = (char *)malloc(yyleng+1); strcpy(yylval.string, yytext); return TOK;
 .             return (int) yytext[0];
 %%
+
+
